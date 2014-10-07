@@ -32,8 +32,13 @@ angular.module("ui.checkbox", []).directive("checkbox", function() {
 				scope.styleicon = {"width": "11px", "left": "-11px", "font-size": "30px"};
 			}
 
-			var trueValue = true;
-			var falseValue = false;
+			var invert = false;
+			if (attrs.invert !== undefined) {
+				invert = true;
+			}
+
+			var trueValue = invert ? false: true;
+			var falseValue = invert ? true: false;
 
 			// If defined set true value
 			if(attrs.ngTrueValue !== undefined) {
@@ -51,7 +56,7 @@ angular.module("ui.checkbox", []).directive("checkbox", function() {
 
 			// Update element when model changes
 			scope.$watch(function() {
-				if(modelCtrl.$modelValue === trueValue || modelCtrl.$modelValue === true) {
+				if(modelCtrl.$modelValue === trueValue) {
 					modelCtrl.$setViewValue(trueValue);
 				} else {
 					modelCtrl.$setViewValue(falseValue);
